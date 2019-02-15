@@ -1,0 +1,37 @@
+#!/usr/bin/env bash
+#DONT ULTRAPASS '|'
+#
+#-----------HEADER------------------------------------------------------------|
+#AUTOR
+#  Jefferson Rocha <lrcjefferson@gmail.com>
+#
+#PROGRAMA
+#  IP
+#
+#DESCRIÇÃO
+#  Imprimi ip externo na tela com o uso do curl
+#
+#CHANGELOG
+#  V1.2 - Jefferson Rocha
+#  -Adicionado servidor v4.ifconfig.co e deixado por padrão, servidor
+#  ifconfig.me ficou como securandário caso o primeiro falhe!
+#-----------------------------------------------------------------------------|
+
+#------VARS------------#
+versao="1.2"
+#--Cores
+vermelho="\033[31;1m"
+cyan="\033[36;1m"
+fecha="\033[m"
+#--Lista de servidores
+servidor1="v4.ifconfig.co"
+servidor2="ifconfig.me"
+#----------------------#
+
+#-----TEST-------------#    
+[[ $(which curl) ]] || { echo "Necessita do curl para continuar" ; exit 1 ;}  # Curl está no sistema?
+#----------------------#
+
+echo -e "\nAguarde..."
+exec_=$(if ! curl -s $servidor1; then curl -s $servidor2 ; fi)     # Servidor 1 falho vai para o 2!
+echo -e "\n${vermelho}Seu IP Externo é:${cyan} ${exec_}${fecha}\n"
